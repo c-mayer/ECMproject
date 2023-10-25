@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1" fbc:required="false" xmlns:fbc="http://www.sbml.org/sbml/level3/version1/fbc/version2">
+   <model id="mbeToy" name="Metabolic_engineering_toy_net" fbc:strict="true">
+      <listOfCompartments>
+         <compartment id="Internal_Species" name="i" constant="true"/>
+      </listOfCompartments>
+      <listOfSpecies>
+         <species id="M_A_c" name="A" boundaryCondition="false" compartment="Internal_Species" constant="false" hasOnlySubstanceUnits="false"/>
+         <species id="M_B_c" name="B" boundaryCondition="false" compartment="Internal_Species" constant="false" hasOnlySubstanceUnits="false"/>
+         <species id="M_C_c" name="C" boundaryCondition="false" compartment="Internal_Species" constant="false" hasOnlySubstanceUnits="false"/>
+         <species id="M_P_c" name="P" boundaryCondition="false" compartment="Internal_Species" constant="false" hasOnlySubstanceUnits="false"/>
+         <species id="M_Q_c" name="Q" boundaryCondition="false" compartment="Internal_Species" constant="false" hasOnlySubstanceUnits="false"/>
+         <species id="M_S_c" name="S" boundaryCondition="false" compartment="Internal_Species" constant="false" hasOnlySubstanceUnits="false"/>
+      </listOfSpecies>
+      <listOfReactions>
+         <reaction id="R01" name="R01" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfProducts>
+               <speciesReference species="M_S_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+         <reaction id="R02" name="R02" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_Q_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+         </reaction>
+         <reaction id="R03" name="R03" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_P_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+         </reaction>
+         <reaction id="R04" name="R04" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_B_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+         </reaction>
+         <reaction id="R05" name="R05" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_S_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species="M_A_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+         <reaction id="R06" name="R06" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_S_c" stoichiometry="2" constant="true"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species="M_C_c" stoichiometry="1" constant="true"/>
+               <speciesReference species="M_P_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+         <reaction id="R07" name="R07" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_A_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species="M_C_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+         <reaction id="R08" name="R08" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_S_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species="M_Q_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+         <reaction id="R09" name="R09" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_S_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species="M_P_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+         <reaction id="R10" name="R10" fast="false" fbc:lowerFluxBound="zero" fbc:upperFluxBound="thou" reversible="false">
+            <listOfReactants>
+               <speciesReference species="M_C_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species="M_B_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+         <reaction id="R11" name="R11" fast="false" fbc:lowerFluxBound="mtho" fbc:upperFluxBound="thou" reversible="true">
+            <listOfReactants>
+               <speciesReference species="M_A_c" stoichiometry="1" constant="true"/>
+            </listOfReactants>
+            <listOfProducts>
+               <speciesReference species="M_B_c" stoichiometry="1" constant="true"/>
+            </listOfProducts>
+         </reaction>
+      </listOfReactions>
+      <listOfParameters>
+         <parameter id="mtho" constant="true" value="-1000" />
+         <parameter id="zero" constant="true" value="0" />
+         <parameter id="five" constant="true" value="5" />
+         <parameter id="ten"  constant="true" value="10" />
+         <parameter id="thou" constant="true" value="1000" />
+      </listOfParameters>
+      <fbc:listOfObjectives fbc:activeObjective="maxR4">
+         <fbc:objective fbc:id="maxR4" fbc:type="maximize">
+            <fbc:listOfFluxObjectives>
+               <fbc:fluxObjective fbc:reaction="R04" fbc:coefficient="1"/>
+            </fbc:listOfFluxObjectives>
+         </fbc:objective>
+         <fbc:objective fbc:id="maxR3" fbc:type="maximize">
+            <fbc:listOfFluxObjectives>
+               <fbc:fluxObjective fbc:reaction="R03" fbc:coefficient="1"/>
+            </fbc:listOfFluxObjectives>
+         </fbc:objective>
+      </fbc:listOfObjectives>
+   </model>
+</sbml>

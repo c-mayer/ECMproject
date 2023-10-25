@@ -1,0 +1,12 @@
+# ignore all temporary directories
+**/tmp
+# ignore result files (too big for remote git repo)
+/result_files
+# ignore first tasks
+/first_tasks
+# ignore old_versions
+/old_versions
+# ignore performance/gtime
+/performance/gtime
+# ignore .ipynb_checkpoints
+**/.ipynb_checkpoints

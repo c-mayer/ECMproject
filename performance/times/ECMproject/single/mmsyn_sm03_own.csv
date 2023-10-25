@@ -1,0 +1,2 @@
+cores,time_total,time_initial_setup,time_projection,time_enumeration,time_postprocessing,ECM_count,max_rss,swap
+20,447.1155104637146,7.093019485473633,435.9958709875743,3.2456323305765786,0.7796565691630045,19394,328928,0

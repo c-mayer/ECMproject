@@ -1,0 +1,2 @@
+cores,time_total,time_preprocessing,time_first_vertex_enumeration,time_intermediate_processing,time_second_vertex_enumeration,time_postprocessing,max_rss,swap
+20,386.0003863970439,4.6804280281066895,26.545027494430542,12.37169329325358,220.70397186279297,121.69818862279256,296320,0
