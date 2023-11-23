@@ -23,7 +23,7 @@ ECMproject is a standalone command line program for Linux systems written in Pyt
 * argparse
 * multiprocessing
 
-Note, that just all important packages needed are shown in this list. You may require more python packages for environmental reasons or to run other scripts (e.g. for plotting) in this GitHub repository. For easy installation of all these packages in a functioning environment, we provide .yaml files. The ???.yaml is the recommended environment for using ECMproject. For completion, we also provide an ???.yaml file to run ecmtool which got used in the Master Thesis.
+Note, that just all important packages needed are shown in this list. You may require more python packages for environmental reasons or to run other scripts (e.g. for plotting) in this GitHub repository. For easy installation of all these packages in a functioning environment, we provide .yaml files. The ECMproject_env.yaml is the recommended environment for using ECMproject. For completion, we also provide an ecmtool_env.yaml file to run ecmtool which got used in the Master Thesis.
 
 ### Tool for parallelized lexicographic reverse search
 
@@ -39,7 +39,7 @@ Note, that the standard directory, where ECMproject takes mplrs is '/opt/lrslib/
 ## Installation
 
 * Install mplrs.
-* Install all required packages in a new Python 3.11 (or higher) environment. (recommended: install the ???.yaml file in a new environment)
+* Install all required packages in a new Python 3.11 (or higher) environment. (recommended: install the ECMproject_env.yaml file in a new environment)
 * Download the latest version of ECMproject via git clone, or as a zip file from https://github.com/c-mayer/ECMproject.
 
 Navigate to the directory and run ECMproject via `./ECMproject -h`

@@ -10,3 +10,5 @@
 /performance/gtime
 # ignore .ipynb_checkpoints
 **/.ipynb_checkpoints
+# ignore installation.txt
+/installation/installations.txt
