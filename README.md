@@ -40,7 +40,7 @@ Note, that the standard directory, where ECMproject takes mplrs is '/opt/lrslib/
 
 * Install mplrs.
 * Install all required packages in a new Python 3.11 (or higher) environment. (recommended: install the ???.yaml file in a new environment)
-* Download the latest version of ECMproject via git clone, or as a zip file from https://github.com/???.
+* Download the latest version of ECMproject via git clone, or as a zip file from https://github.com/c-mayer/ECMproject.
 
 Navigate to the directory and run ECMproject via `./ECMproject -h`
 
