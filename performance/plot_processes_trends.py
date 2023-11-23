@@ -90,9 +90,9 @@ if __name__ == '__main__':
         plt.plot(cores_own, means_own, label='ECMproject', linestyle='-', markersize=4, marker='o')
     if ecmtool:
         if stdev:
-            plt.errorbar(cores_ecmtool, means_ecmtool, stdevs_ecmtool, label='ecmtool mplrs', linestyle='-', markersize=4, marker='s', capsize=3)
+            plt.errorbar(cores_ecmtool, means_ecmtool, stdevs_ecmtool, label='ecmtool', linestyle='--', markersize=4, marker='s', capsize=3)
         else:
-            plt.plot(cores_ecmtool, means_ecmtool, label='ecmtool mplrs', linestyle='-', markersize=4, marker='s')
+            plt.plot(cores_ecmtool, means_ecmtool, label='ecmtool', linestyle='--', markersize=4, marker='s')
     
     # legend
     handles, labels = ax.get_legend_handles_labels()

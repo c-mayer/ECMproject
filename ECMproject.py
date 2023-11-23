@@ -585,8 +585,12 @@ def ECM_queue_processing(ECM_queue, header, chunksize, outputfile):
                     ti.sleep(3) # initial waiting time not depending on chunksize
             if chunksize <= 10000:
                 ti.sleep(1)
+                if ECM_queue.empty():
+                    break
             if chunksize > 10000 <= 100000:
                 ti.sleep(chunksize * 0.00014)
+                if ECM_queue.empty():
+                    break
             if chunksize > 100000:
                 ti.sleep(chunksize * 0.0002)
                 if ECM_queue.empty():
@@ -990,17 +994,12 @@ if __name__ == '__main__':
                                     ti.sleep(0.5 + (chunksize * 0.00001)) # sleep is needed to get all ECMs of the last chunks since last process sometimes finishes earlier than processes before
                                 else:
                                     ti.sleep(chunksize * 0.00005)
-                                if parallel:
-                                    process.join()
-                                    if gzipped:
-                                        ECM_count = ECM_count.value # get total number of ECMs
-                                        count_queue_process.join()
-                                        ECM_queue_process.join()
+                                process.join()
+                                
                             if gzipped:
-                                ECM_queue_process.join()
                                 count_queue_process.join()
-                                # get total number of ECMs
-                                ECM_count = ECM_count.value
+                                ECM_queue_process.join()
+                                ECM_count = ECM_count.value # get total number of ECMs
                         break
                     
                     if parallel and not pool_switch:

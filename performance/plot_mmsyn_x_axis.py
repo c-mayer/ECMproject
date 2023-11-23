@@ -38,19 +38,22 @@ if __name__ == '__main__':
     
     ### options
     log_scale = True
+    day = True # 1 day mark in y axis
+    y_borders = False # if not False, give the border values of the y axis (for log scale use power of.... e.g. (10**-1, 10**5))
     memory = False
     stdev = False
+    ecmtool = True
     pool = False
     single = False
-    ecmtool = True
     max_complexity = 22 # if 22 --> up to mmsyn_sm22
-    lookup_time = 'time_initial_setup'
+    legend = True
+    lookup_time = 'time_total'
     if ecmtool:
-        lookup_time_ecmtool_1 = 'time_preprocessing'
+        lookup_time_ecmtool_1 = 'time_total'
         lookup_time_ecmtool_2 = False
             
-    ECMproject_label = 'ECMproject initial_setup'
-    ecmtool_label = 'ecmtool preprocessing'
+    ECMproject_label = 'ECMproject total'
+    ecmtool_label = 'ecmtool total'
     
     # range of x-axis for model complexity
     x = list(range(0,max_complexity+1))
@@ -196,42 +199,51 @@ if __name__ == '__main__':
     fig, ax = plt.subplots()
     
     if stdev:
-        plt.errorbar(x_ECMproject, ECMproject_means, ECMproject_stdevs, label=ECMproject_label, linestyle='-', markersize=4, marker='o', capsize=3)
+        plt.errorbar(x_ECMproject, ECMproject_means, ECMproject_stdevs, label=ECMproject_label, linestyle='-', color='b', markersize=4, marker='o', capsize=3)
     else:
-        plt.plot(x_ECMproject, ECMproject_means, label=ECMproject_label, linestyle='-', markersize=4, marker='o')
+        plt.plot(x_ECMproject, ECMproject_means, label=ECMproject_label, linestyle='-', color='b', markersize=4, marker='o')
     
     if ecmtool:
         if stdev:
-            plt.errorbar(x_ecmtool, ecmtool_means, ecmtool_stdevs, label=ecmtool_label, linestyle='-', markersize=4, marker='s', capsize=3)
+            plt.errorbar(x_ecmtool, ecmtool_means, ecmtool_stdevs, label=ecmtool_label, linestyle='--', color='orange', markersize=4, marker='s', capsize=3)
         else:
-            plt.plot(x_ecmtool, ecmtool_means, label=ecmtool_label, linestyle='-', markersize=4, marker='s')
-    
-    if pool:
-        if stdev:
-            plt.errorbar(x_pool, pool_means, pool_stdevs, label='ECMproject parallel with pool', linestyle='-', markersize=4, marker='^', capsize=3)
-        else:
-            plt.plot(x_pool, pool_means, label='ECMproject parallel with pool', linestyle='-', markersize=4, marker='^')
+            plt.plot(x_ecmtool, ecmtool_means, label=ecmtool_label, linestyle='--', color='orange', markersize=4, marker='s')
     
     if single:
         if stdev:
-            plt.errorbar(x_single, single_means, single_stdevs, label='ECMproject not parallel', linestyle='-', markersize=4, marker='x', capsize=3)
+            plt.errorbar(x_single, single_means, single_stdevs, label='ECMproject not parallel', linestyle='--', color='g', markersize=4, marker='x', capsize=3)
         else:
-            plt.plot(x_single, single_means, label='ECMproject not parallel', linestyle='-', markersize=4, marker='x')
+            plt.plot(x_single, single_means, label='ECMproject not parallel', linestyle='--', color='g', markersize=4, marker='x')
+    
+    if pool:
+        if stdev:
+            plt.errorbar(x_pool, pool_means, pool_stdevs, label='ECMproject parallel with -pool', linestyle='-.', color='r', markersize=4, marker='^', capsize=3)
+        else:
+            plt.plot(x_pool, pool_means, label='ECMproject parallel with pool', linestyle='-.', color='r', markersize=4, marker='^')
+
     
     ax.set_xlim(-0.5, max_complexity+0.5)
     #plt.margins(x=0.02, tight=True)
     ax.tick_params(axis='both', direction='in', which='both')
     
     # legend
-    #handles, labels = ax.get_legend_handles_labels()
-    #handles = [h[0] if isinstance(h, container.ErrorbarContainer) else h for h in handles] # take out errorbars of legend objects if object stems from plt.errorbar
-    if ecmtool:
-        ncols = 2
-    elif pool and single:
-        ncols = 2
-    else:
-        ncols = 1
-    #plt.legend(handles, labels, loc="center", bbox_to_anchor=(0.5, -0.2), ncols=ncols)
+    if legend:
+        handles, labels = ax.get_legend_handles_labels()
+        handles = [h[0] if isinstance(h, container.ErrorbarContainer) else h for h in handles] # take out errorbars of legend objects if object stems from plt.errorbar
+        # set number of columns for legend
+        if ecmtool:
+            ncols = 2
+        elif pool and single:
+            ncols = 2
+        else:
+            ncols = 1
+
+        if (len(handles) == 3) and single and pool:
+            # set order of handle items
+            order = [1,2,0] # 0 = parallel not pool; 1 = single, 2 = parallel pool
+            plt.legend([handles[idx] for idx in order], [labels[idx] for idx in order], loc="center", bbox_to_anchor=(0.45, -0.2), ncols=ncols)
+        else:
+            plt.legend(handles, labels, loc="center", bbox_to_anchor=(0.5, -0.16), ncols=ncols)
     
     # x-axis
     plt.xlabel('complexity of the medium')
@@ -244,24 +256,38 @@ if __name__ == '__main__':
     if log_scale:
         plt.yscale("log")
         if not memory:
+            if y_borders:
+                y_min, y_max = y_borders
+                plt.ylim(y_min, y_max)
             plt.text(0, 60 + 5, '1 minute')
             plt.text(0, 3600 + 200, '1 hour')
-            plt.text(0, 86400 + 2000, '1 day')
+            if day:
+                plt.text(0, 86400 + 2000, '1 day')
         else:
+            if y_borders:
+                y_min, y_max = y_borders
+                plt.ylim(y_min, y_max)
             plt.text(0, 1000 + 100, '1 MB')
             plt.text(0, 1000000 + 100000, '1 GB')
             plt.text(0, 1000000000 + 100000000, '1 TB')
     else:
         if not memory:
-            y_max = 100000
-            plt.ylim(0,y_max)
+            if y_borders:
+                y_min, y_max = y_borders
+                plt.ylim(y_min, y_max)
+            else:
+                plt.ylim(0, 100000)
             interval = y_max/100
             plt.text(0, 60 + interval, '1 minute')
             plt.text(0, 3600 + interval, '1 hour')
-            plt.text(0, 86400 + interval, '1 day')
+            if day:
+                plt.text(0, 86400 + interval, '1 day')
         else:
-            y_max = 1000000
-            plt.ylim(0,y_max)
+            if y_borders:
+                y_min, y_max = y_borders
+                plt.ylim(y_min, y_max)
+            else:
+                plt.ylim(0, 1000000)
             interval = y_max/100
             plt.text(0, 1000 + interval, '1 MB')
             plt.text(0, 1000000 + interval, '1 GB')
@@ -271,7 +297,8 @@ if __name__ == '__main__':
     if not memory:
         ax.axhline(60, linestyle='--', color='grey', linewidth=0.5)
         ax.axhline(3600, linestyle='--', color='grey', linewidth=0.5)
-        #ax.axhline(86400, linestyle='--', color='grey', linewidth=0.5)
+        if day:
+            ax.axhline(86400, linestyle='--', color='grey', linewidth=0.5)
     else:
         ax.axhline(1000, linestyle='--', color='grey', linewidth=0.5)
         ax.axhline(1000000, linestyle='--', color='grey', linewidth=0.5)

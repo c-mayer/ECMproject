@@ -27,6 +27,7 @@ def load_time_results(filename):
     
 
 def get_plotting_input(dictionary, lookup_time, json_file):
+    '''Creates list with cores, mean and stdev as input for plotting.'''
     core_list = [int(cores) for cores in dictionary.keys()]
     mean_list = [dictionary[str(cores)][lookup_time]['mean'] for cores in core_list]
     try:
@@ -57,9 +58,11 @@ if __name__ == '__main__':
     lowest_n_processes = min(n_processes)
     lookup_time = 'time_total'
     log_scale = True
-    memory = True
-    ecmtool = True
+    memory = False
+    ecmtool = False
     stdev = False
+    legend = True
+    ncols = 4
     
     if memory:
         if log_scale:
@@ -73,10 +76,11 @@ if __name__ == '__main__':
     ### plot total times of all mmsyn models
     x = [0, 5, 10, 15]
     models = ['mmsyn_sm' + str(num).zfill(2) for num in x]
+    linestyles = ['-.', '-', '--', ':']
     
     fig, ax = plt.subplots()
     
-    for model in models:
+    for index, model in enumerate(models):
         if ecmtool:
             json_file = inpath_ecmtool + model + '_ecmtool_result_times.json'
         else:
@@ -85,10 +89,12 @@ if __name__ == '__main__':
         cores, means, stdevs = get_plotting_input(dictionary, lookup_time, json_file)
         
         # plotting
+        if len(models) == 4:
+            linestyle = linestyles[index]
         if stdev:
-            plt.errorbar(cores, means, stdevs, label=model, marker='o', markersize=4, capsize=3)
+            plt.errorbar(cores, means, stdevs, label=model, linestyle=linestyle, marker='o', markersize=4, capsize=3)
         else:
-            plt.plot(cores, means, label=model, marker='o', markersize=4)
+            plt.plot(cores, means, label=model, linestyle=linestyle, marker='o', markersize=4)
 
     plt.margins(x=0.02, tight=True)
     ax.tick_params(axis='both', direction='in', which='both')
@@ -139,15 +145,19 @@ if __name__ == '__main__':
             plt.grid(visible=True, which='major', axis='y', color='grey', linestyle='--', linewidth=0.5)
     
     # legend
-    handles, labels = ax.get_legend_handles_labels()
-    handles = [h[0] if isinstance(h, container.ErrorbarContainer) else h for h in handles] # take out errorbars of legend objects if object stems from plt.errorbar
-    if  (len(models) % 2) == 0:
-        ncols = 2
-    elif len(models) <= 1:
-        ncols = 1
-    else:
-        ncols = 3
-    plt.legend(handles, labels, loc="center", bbox_to_anchor=(0.5, -0.18), ncols=ncols)
+    if legend:
+        handles, labels = ax.get_legend_handles_labels()
+        handles = [h[0] if isinstance(h, container.ErrorbarContainer) else h for h in handles] # take out errorbars of legend objects if object stems from plt.errorbar
+        if ncols:
+            ncols = ncols
+        else:
+            if  (len(models) % 2) == 0:
+                ncols = 2
+            elif len(models) <= 1:
+                ncols = 1
+            else:
+                ncols = 3
+        plt.legend(handles, labels, loc="center", bbox_to_anchor=(0.5, -0.18), ncols=ncols)
     
     # save file
     if ecmtool:

@@ -43,13 +43,14 @@ if __name__ == '__main__':
     
     # Switches
     log_scale = True
-    ecmtool = True
+    ecmtool = False
     times_ECMproject =  ['time_total', 'time_initial_setup', 'time_projection', 'time_enumeration', 'time_postprocessing']
     times_ecmtool = ['time_total', 'time_preprocessing', 'time_first_vertex_enumeration', 'time_intermediate_processing', 'time_second_vertex_enumeration', 'time_postprocessing']
     core_name = 'mmsyn_sm15'
     n_processes = [10, 20, 30, 40, 50, 60]
     lowest_n_processes = min(n_processes)
     stdev = False
+    markers = ['o', 's', 'x', '^', 'v', '>', '<']
     
     # Input File
     ECMproject_json = inpath_ECMproject + '/' + core_name + '_mplrs_project_result_times.json'
@@ -64,26 +65,26 @@ if __name__ == '__main__':
         #plt.title('ECMproject ' + core_name)
         # ECMproject
         dictionary_ECMproject = load_time_results(ECMproject_json)
-        for lookup_time in times_ECMproject:
+        for index, lookup_time in enumerate(times_ECMproject):
             cores_ECMproject, means_ECMproject, stdevs_ECMproject = get_plotting_input(dictionary_ECMproject, lookup_time)
             
             if stdev:
-                plt.errorbar(cores_ECMproject, means_ECMproject, stdevs_ECMproject, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker='o', capsize=3)
+                plt.errorbar(cores_ECMproject, means_ECMproject, stdevs_ECMproject, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker=markers[index], capsize=3)
             else:
-                plt.plot(cores_ECMproject, means_ECMproject, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker='o')
+                plt.plot(cores_ECMproject, means_ECMproject, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker=markers[index])
         
         
     else:
         #plt.title('ecmtool ' + core_name)
         # ecmtool
         dictionary_ecmtool = load_time_results(ecmtool_json)
-        for lookup_time in times_ecmtool:
+        for index, lookup_time in enumerate(times_ecmtool):
             cores_ecmtool, means_ecmtool, stdevs_ecmtool = get_plotting_input(dictionary_ecmtool, lookup_time)
             
             if stdev:
-                plt.errorbar(cores_ecmtool, means_ecmtool, stdevs_ecmtool, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker='s', capsize=3)
+                plt.errorbar(cores_ecmtool, means_ecmtool, stdevs_ecmtool, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker=markers[index], capsize=3)
             else:
-                plt.plot(cores_ecmtool, means_ecmtool, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker='s')
+                plt.plot(cores_ecmtool, means_ecmtool, label=' '.join(lookup_time.split('_')[1:]), linestyle='-', markersize=4, marker=markers[index])
     
     
     # legend

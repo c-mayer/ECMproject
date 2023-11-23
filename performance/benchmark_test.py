@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 
-"""Python script to benchmark clock time of own implementation with clock time of the predecessor ecmtool and mfel.
+"""Python script to benchmark clock time of ECMproject implementation with clock time of the predecessor ecmtool and mfel.
 
 Requirements to work when working with all three tool options: Needs environment with following programs:
                       1) installed tsch for mfel scrip (conda install -c conda-forge tcsh)
                       2) installed ecmtool (git clone https://github.com/SystemsBioinformatics/ecmtool.git)
-                         python 3.8
                          ecmtool requirements into ecmtool directory (pip install -r requirements.txt --upgrade -t .)
                          ecmtool lib (conda install -c conda-forge lrslib=70.a)
                       3) cobra (conda install -c conda-forge cobra)
-                         and my own code
+                         and ECMproject
 
 @author: Christian Mayer
 """
@@ -24,7 +23,7 @@ import argparse
 import os
 
 
-def get_json_times(time_file, sbmlfile, own_tool, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize):
+def get_json_times(time_file, sbmlfile, ECMproject, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize):
     '''Runs code multiple times with n_cores and N-repeats and creates a dictionary which stores all times in seconds gathered from json files in dictionary with cores as keys. Each key itself opens a new dictionary with different kind of times as keys and list of repeats as values.
     Structure of dictionary: dict = {cores: {times: {'all_times': []}}}'''
     result_dict = defaultdict(dict)
@@ -33,12 +32,12 @@ def get_json_times(time_file, sbmlfile, own_tool, ecmtool, gnutime, path2mplrs, 
         for i in range(n_repeats):
             print(f'Repeat {i + 1}')
             # run script
-            if script == 'own':
-                cmd = [gnutime, '-v', own_tool, '-f', sbmlfile, '-m', core_name, '-n', str(cores), '-o', tmp_path, '-mp', path2mplrs, '--time', '--chunksize', str(chunksize)] # default cores are 3 and chunksize 100 000
+            if script == 'ECMproject':
+                cmd = [gnutime, '-v', ECMproject, '-f', sbmlfile, '-m', core_name, '-n', str(cores), '-o', tmp_path, '-mp', path2mplrs, '--time', '--chunksize', str(chunksize)] # default cores are 3 and chunksize 100 000
             elif script == 'ecmtool':
                 cmd = [gnutime, '-v', 'python', ecmtool, '--model_path', sbmlfile, '--out_path', tmp_path + core_name + "_ecmtool.csv", '--path2mplrs', path2mplrs, '--processes', str(cores)] # default cores are 3
             elif script == 'mfel':
-                cmd = [gnutime, '-v', own_tool, '-f', sbmlfile, '-m', core_name, '-n', str(cores), '-o', tmp_path, '-mp', path2mplrs, '--time', '--mfel', '--chunksize', str(chunksize), '-p'] # default cores are 3 and chunksize 100 000
+                cmd = [gnutime, '-v', ECMproject, '-f', sbmlfile, '-m', core_name, '-n', str(cores), '-o', tmp_path, '-mp', path2mplrs, '--time', '--mfel', '--chunksize', str(chunksize), '-p'] # default cores are 3 and chunksize 100 000
             #output = subprocess.run(cmd, stderr=subprocess.PIPE) # capture_output=False leads to output written to console
             #print(output)
             
@@ -127,7 +126,7 @@ def all_means_to_csv(result_dict, n_cores, filename):
 if __name__ == '__main__':
     
     ### argparse ###
-    parser = argparse.ArgumentParser(description='Python script to benchmark clock time of own implementation with clock time of the predecessor ecmtool and mfel. For requirements to work see docstring of file. @author: Christian Mayer', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description='Python script to benchmark clock time of ECMproject implementation with clock time of the predecessor ecmtool and mfel. For requirements to work see docstring of file. @author: Christian Mayer', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     
     # create group for required arguments
     parser_req = parser.add_argument_group('required arguments')
@@ -145,7 +144,7 @@ if __name__ == '__main__':
                             action='store',
                             required=True)
     parser_req.add_argument('-t', '--tools',
-                            help='Give list of tools which will be used. Three entries are posible: "own", "ecmtool", "mfel". At least one of these entries must be given. e.g. if you want own and ecmtool: own,ecmtool',
+                            help='Give list of tools which will be used. Three entries are posible: "ECMproject", "ecmtool", "mfel". At least one of these entries must be given. e.g. if you want ECMproject and ecmtool: ECMproject,ecmtool',
                             type=str,
                             metavar='STR',
                             action='store',
@@ -186,8 +185,8 @@ if __name__ == '__main__':
                         metavar='FILE',
                         action='store',
                         default='/opt/lrslib/v072/mplrs')
-    parser.add_argument('-ot', '--own_tool',
-                        help='Path to my own new mplrs project execution file.',
+    parser.add_argument('-ep', '--ECMproject',
+                        help='Path to ECMproject.py.',
                         type=str,
                         metavar='FILE',
                         action='store',
@@ -218,7 +217,7 @@ if __name__ == '__main__':
     tools = args.tools.split(',')
     n_cores = args.n_cores.split(',')
     n_repeats = args.repeats
-    own_tool = args.own_tool
+    ECMproject = args.ECMproject
     ecmtool = args.ecmtool
     path2mplrs = args.mplrs
     outpath = args.outpath
@@ -236,10 +235,10 @@ if __name__ == '__main__':
     
     # proof which tools are given
     print(f'Choosen tools: {tools}')
-    if 'own' in tools:
-        own_switch = True
+    if 'ECMproject' in tools:
+        ECMproject_switch = True
     else:
-        own_switch = False
+        ECMproject_switch = False
     
     if 'ecmtool' in tools:
         ecmtool_switch = True
@@ -260,27 +259,27 @@ if __name__ == '__main__':
     if not os.path.exists(tmp_path):
         os.mkdir(tmp_path)
     
-    if own_switch:
-        ##### own code #####
-        print('=== Test for own code. ===')
-        script = 'own'
+    if ECMproject_switch:
+        ##### ECMproject #####
+        print('=== Test for ECMproject. ===')
+        script = 'ECMproject'
         # json file
         time_file = './results/' + core_name + '_times.json'
-        result_own = get_json_times(time_file, sbmlfile, own_tool, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize)
-        result_own = get_mean_stdev(result_own, stdev=stdev)
-        json.dump(result_own, open(outpath + core_name + '_mplrs_project_result_times.json','w'))
+        result_ECMproject = get_json_times(time_file, sbmlfile, ECMproject, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize)
+        result_ECMproject = get_mean_stdev(result_ECMproject, stdev=stdev)
+        json.dump(result_ECMproject, open(outpath + core_name + '_mplrs_project_result_times.json','w'))
         print(f'{outpath + core_name + "_mplrs_project_result_times.json"} created.')
         # csv files
         csv_file = outpath + '/' + 'all_total_times_own.csv'
-        total_time_means_to_csv(result_own, n_cores, csv_file, core_name)
+        total_time_means_to_csv(result_ECMproject, n_cores, csv_file, core_name)
         print(f'{csv_file} created')
         csv_file = outpath + '/' + core_name + '_own.csv'
-        all_means_to_csv(result_own, n_cores, csv_file)
+        all_means_to_csv(result_ECMproject, n_cores, csv_file)
         print(f'{csv_file} created')
         
         if args.verbose:
-            print('=== Result own code. ===')
-            print(result_own)
+            print('=== Result ECMproject. ===')
+            print(result_ECMproject)
 
         ## times ##
         #total
@@ -296,7 +295,7 @@ if __name__ == '__main__':
         script = 'ecmtool'
         # json file
         time_file = './results/' + core_name + '_ecmtool_times.json'
-        result_ecmtool = get_json_times(time_file, sbmlfile, own_tool, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize)
+        result_ecmtool = get_json_times(time_file, sbmlfile, ECMproject, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize)
         result_ecmtool = get_mean_stdev(result_ecmtool, stdev=stdev)
         json.dump(result_ecmtool, open(outpath + core_name + '_ecmtool_result_times.json','w'))
         print(f'{outpath + core_name + "_ecmtool_result_times.json"} created.')
@@ -322,12 +321,12 @@ if __name__ == '__main__':
 
 
     if mfel_switch:
-        ###### own code with mfel script in tcsh #####
+        ###### ECMproject code with mfel script in tcsh #####
         print('=== Test for mfel. ===')
         script = 'mfel'
         # json file
         time_file = './results/' + core_name + '_times.json'
-        result_mfel = get_json_times(time_file, sbmlfile, own_tool, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize)
+        result_mfel = get_json_times(time_file, sbmlfile, ECMproject, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize)
         result_mfel = get_mean_stdev(result_mfel, stdev=stdev)
         json.dump(result_mfel, open(outpath + core_name + '_mfel_result_times.json','w'))
         print(f'{outpath + core_name + "_mfel_result_times.json"} created.')
