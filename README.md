@@ -25,7 +25,9 @@ Note, that just all important packages needed are shown in this list. You may re
 
 #### Help with conda
 
-```conda env create -f ECMproject.yml```
+```
+conda env create -f ECMproject.yml
+```
 
 For a more comprehensive environment which also can run plotting scripts etc.
 
@@ -60,7 +62,9 @@ Note, if you installed mplrs into another directory than your PATH, you have to 
 
 NOTE: mplrs uses MPI for parallelization and therefore requires the MPI library. For this example, Open MPI is used.
 
-```apt install libopenmpi-dev```
+```
+apt install libopenmpi-dev
+```
 
 Now we can install mplrs.
 
@@ -94,37 +98,49 @@ ECMproject is a standalone command line tool for Linux systems. All avaiable opt
 
 Be aware, that all examples are written with relative paths constructed on the repository structure with the directory of ECMproject as working directory. Of course, you can replace these paths with your own paths.
 
-```./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -n 10```
+```
+./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -n 10
+```
 
 This example takes the 'mmsyn_sm05.xml' SBML-model and saves the result file named 'mmsyn_sm05.csv' with all ECMs into the current working directory. Ten cores are used to perform **mplrs**.
 
 <br/>
 
-```./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p```
+```
+./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p
+```
 
 In this example, the result file gets saved into a result directory. Ten cores are used to perform **mplrs and postprocessing**.
 
 <br/>
 
-```./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -gz -t```
+```
+./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -gz -t
+```
 
 In this example, the result file gets saved into the results directory in compressed format, together with a file which shows the needed time for each part of the analysis in seconds.
 
 <br/>
 
-```./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -mp ~/lrslib/v072/mplrs```
+```
+./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -mp ~/lrslib/v072/mplrs
+```
 
 In this example, mplrs got installed into the home directory. Therefore, the '*-mp*' option has to be given.
 
 ### Advanced usage examples
 
-```./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -dv -tmp ./new_tmp/```
+```
+./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -dv -tmp ./new_tmp/
+```
 
 In this example, additionally to the result file, all intermediate results are saved into the 'new_tmp' directory. The '*dv*' option asssures, that all intermediate results are not deleted at the end of the analysis.
 
 <br/>
 
-```./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -po ./tmp/mmsyn_sm05.projected```
+```
+./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -po ./tmp/mmsyn_sm05.projected
+```
 
 In this example, only the postprocessing step gets performed. Be aware you have a saved temporary V-representation (xxx.projected) beforehand (with the '*-dv*' option). The '*-po*' option got implemented to run the analysis fast if only postprocessing throws an error. You save time by not doing the projection and the conversion again (which need the most time in the analysis).
 
