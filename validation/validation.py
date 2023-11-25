@@ -185,7 +185,7 @@ if __name__ == '__main__':
                         type=float,
                         metavar='FLOAT',
                         action='store',
-                        default=1e-5)
+                        default=1e-3)
     parser.add_argument('-tol_un', '--tolerance_unique',
                         help='Give tolerance, when two numbers are seen as the same for proof of uniqueness. Useful value: double of the validation tolerance',
                         type=float,

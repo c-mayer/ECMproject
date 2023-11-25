@@ -663,7 +663,7 @@ if __name__ == '__main__':
                         type=str,
                         metavar='FILE',
                         action='store',
-                        default='/opt/lrslib/v072/mplrs')
+                        default='mplrs')
     parser.add_argument('-o', '--outpath',
                         help='Directory, where results shall be saved.',
                         type=str,
@@ -712,7 +712,7 @@ if __name__ == '__main__':
                         type=str,
                         metavar='STR',
                         action='store',
-                        default=None)
+                        default='1e06')
     parser.add_argument('-mf', '--mfel',
                         help='Mplrs project will be performed with mfel file if flag is given as an option.',
                         action='store_true')

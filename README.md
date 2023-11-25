@@ -16,25 +16,63 @@ ECMproject is a standalone command line program for Linux systems written in Pyt
 
 ### Required python packages
 
-* cobra 0.26.3
+* cobra 0.26.3 or higher
 * lrslib 70.a (python library for mplrs)
-* numpy 1.23.5
-* pip 23.1.2
-* argparse
-* multiprocessing
+* numpy 1.23.5 or higher
+* tcsh (just for '*--mfel option*')
 
 Note, that just all important packages needed are shown in this list. You may require more python packages for environmental reasons or to run other scripts (e.g. for plotting) in this GitHub repository. For easy installation of all these packages in a functioning environment, we provide .yml files. The 'ECMproject_env.yml' is the recommended environment for using ECMproject. For completion, we also provide an 'ecmtool_env.yml' file to run ecmtool which got used in the Master Thesis.
+
+#### Help with conda
+
+    `conda env create -f ECMproject.yml`
+
+For a more comprehensive environment which also can run plotting scripts etc.
+
+or:
+
+```
+conda create -n env python
+
+conda activate env
+
+pip install cobra
+
+conda install -c conda-forge lrslib=70.a
+```
+
+`conda install -c conda-forge tcsh` (just for '*--mfel*' option required)
+
+For a lean environment which can run ECMproject with all of its options.
+
 
 ### Tool for parallelized lexicographic reverse search
 
 * mplrs with mplrs project
 
-Installation of mplrs ???
 Download latest version from http://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/.
 
-Note, that mplrs uses MPI for parallelization and therefore requires the MPI library. Used MPI was 'mpirun (Open MPI) 4.1.0'.
+Note, that mplrs uses MPI for parallelization and therefore requires an MPI library. Used MPI was 'mpirun (Open MPI) 4.1.0'.
 
-Note, that the standard directory, where ECMproject takes mplrs is '/opt/lrslib/v072/mplrs'. If you installed mplrs into another directory, you have to set the '*--mplrs*' option in the command line and give the path to the installed mplrs file (see Usage examples).
+Note, if you installed mplrs into another directory than your PATH, you have to set the '*--mplrs*' option in the command line and give the path to the installed mplrs file (see Usage examples). Of course, you also can add the mplrs directory to your PATH instead or create a symbolic link. If you have multiple mplrs versions installed, taking the mplrs version you want with the '*--mplrs*' option is recommended.
+
+#### Help
+
+NOTE: mplrs uses MPI for parallelization and therefore requires the MPI library. For this example, Open MPI is used.
+
+`apt install libopenmpi-dev`
+
+Now we can install mplrs.
+
+```
+wget http://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/lrslib-072.tar.gz
+
+tar -xzf lrslib-072.tar.gz
+
+cd lrslib-072
+
+make && make mplrs && make install
+```
 
 ## Installation
 
