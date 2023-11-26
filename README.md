@@ -54,7 +54,7 @@ For a lean environment which can run ECMproject with all of its options.
 
 Download latest version from http://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/.
 
-Note, that mplrs uses MPI for parallelization and therefore requires an MPI library. Used MPI was 'mpirun (Open MPI) 4.1.0'.
+Note, that mplrs uses MPI for parallelization and therefore requires a MPI library. Used MPI was 'mpirun (Open MPI) 4.1.0'.
 
 Note, if you installed mplrs into another directory than your PATH, you have to set the '*--mplrs*' option in the command line and give the path to the installed mplrs file (see Usage examples). Of course, you also can add the mplrs directory to your PATH instead or create a symbolic link. If you have multiple mplrs versions installed, taking the mplrs version you want with the '*--mplrs*' option is recommended.
 
@@ -126,7 +126,7 @@ In this example, the result file gets saved into the results directory in compre
 ./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -mp ~/lrslib/v072/mplrs
 ```
 
-In this example, mplrs got installed into the home directory. Therefore, the '*-mp*' option has to be given.
+In this example, mplrs got installed into the home directory. Therefore, the '*-mp*' option has to be given, if the home directory is not in the PATH.
 
 ### Advanced usage examples
 
@@ -134,7 +134,7 @@ In this example, mplrs got installed into the home directory. Therefore, the '*-
 ./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -dv -tmp ./new_tmp/
 ```
 
-In this example, additionally to the result file, all intermediate results are saved into the 'new_tmp' directory. The '*dv*' option asssures, that all intermediate results are not deleted at the end of the analysis.
+In this example, additionally to the result file, all intermediate results are saved into the 'new_tmp' directory. The '*-dv*' option asssures, that all intermediate results are not deleted at the end of the analysis.
 
 <br/>
 
