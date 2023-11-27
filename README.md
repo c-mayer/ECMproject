@@ -84,7 +84,7 @@ make && make mplrs && make install
 * Install all required packages in a new Python 3.11 (or higher) environment. (recommended: install the ECMproject_env.yaml file in a new environment)
 * Download the latest version of ECMproject via git clone, or as a zip file from https://github.com/c-mayer/ECMproject.
 
-Navigate to the directory and run ECMproject via `./ECMproject -h`
+Navigate to the directory and run ECMproject via `./ECMproject.py -h`
 
 ## Description
 
@@ -92,14 +92,14 @@ Metabolic models as input are given via the SBML-format. Cobrapy is used to pars
 
 ## Usage
 
-ECMproject is a standalone command line tool for Linux systems. All avaiable options are shown in the help page (`./ECMproject -h`). Two options are required at least. The input SBML-File is given with the '*--file*' or '*-f*' option. Secondly, a model name has to be given with the '*--model_name*' or '*-m*' option which will name all further produced files. It is recommended to use the '*--parallel*' or '*-p*' option for parallelizing the postprocessing step and therefore fasten up the analysis. You can enter the number of used cores for mplrs and postprocessing with the '*n_processes*' or '*-n*' option. It is recommended to use higher core numbers since it can speed up the analysis quite strong on more complex models. Be aware, that you always need enough free CPUs if high numbers are chosen. With the '*--gzipped*' or '*-gz*' option, result files get output in a compressed manner. Only use this option, if disc space is a problem, because it slows down the postprocessing step significantly.
+ECMproject is a standalone command line tool for Linux systems. All avaiable options are shown in the help page (`./ECMproject.py -h`). Two options are required at least. The input SBML-File is given with the '*--file*' or '*-f*' option. Secondly, a model name has to be given with the '*--model_name*' or '*-m*' option which will name all further produced files. It is recommended to use the '*--parallel*' or '*-p*' option for parallelizing the postprocessing step and therefore fasten up the analysis. You can enter the number of used cores for mplrs and postprocessing with the '*n_processes*' or '*-n*' option. It is recommended to use higher core numbers since it can speed up the analysis quite strong on more complex models. Be aware, that you always need enough free CPUs if high numbers are chosen. With the '*--gzipped*' or '*-gz*' option, result files get output in a compressed manner. Only use this option, if disc space is a problem, because it slows down the postprocessing step significantly.
 
 ### Usage examples
 
 Be aware, that all examples are written with relative paths constructed on the repository structure with the directory of ECMproject as working directory. Of course, you can replace these paths with your own paths.
 
 ```
-./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -n 10
+./ECMproject.py -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -n 10
 ```
 
 This example takes the 'mmsyn_sm05.xml' SBML-model and saves the result file named 'mmsyn_sm05.csv' with all ECMs into the current working directory. Ten cores are used to perform **mplrs**.
@@ -107,7 +107,7 @@ This example takes the 'mmsyn_sm05.xml' SBML-model and saves the result file nam
 <br/>
 
 ```
-./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p
+./ECMproject.py -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p
 ```
 
 In this example, the result file gets saved into a result directory. Ten cores are used to perform **mplrs and postprocessing**.
@@ -115,7 +115,7 @@ In this example, the result file gets saved into a result directory. Ten cores a
 <br/>
 
 ```
-./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -gz -t
+./ECMproject.py -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -gz -t
 ```
 
 In this example, the result file gets saved into the results directory in compressed format, together with a file which shows the needed time for each part of the analysis in seconds.
@@ -123,7 +123,7 @@ In this example, the result file gets saved into the results directory in compre
 <br/>
 
 ```
-./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -mp ~/lrslib/v072/mplrs
+./ECMproject.py -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -mp ~/lrslib/v072/mplrs
 ```
 
 In this example, mplrs got installed into the home directory. Therefore, the '*-mp*' option has to be given, if the home directory is not in the PATH.
@@ -131,7 +131,7 @@ In this example, mplrs got installed into the home directory. Therefore, the '*-
 ### Advanced usage examples
 
 ```
-./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -dv -tmp ./new_tmp/
+./ECMproject.py -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -dv -tmp ./new_tmp/
 ```
 
 In this example, additionally to the result file, all intermediate results are saved into the 'new_tmp' directory. The '*-dv*' option asssures, that all intermediate results are not deleted at the end of the analysis.
@@ -139,7 +139,7 @@ In this example, additionally to the result file, all intermediate results are s
 <br/>
 
 ```
-./ECMproject -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -po ./tmp/mmsyn_sm05.projected
+./ECMproject.py -f ./metabolic_models/mmsyn_sm05.xml -m mmsyn_sm05 -o ./results/ -n 10 -p -po ./tmp/mmsyn_sm05.projected
 ```
 
 In this example, only the postprocessing step gets performed. Be aware you have a saved temporary V-representation (xxx.projected) beforehand (with the '*-dv*' option). The '*-po*' option got implemented to run the analysis fast if only postprocessing throws an error. You save time by not doing the projection and the conversion again (which need the most time in the analysis).
