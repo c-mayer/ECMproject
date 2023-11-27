@@ -696,7 +696,7 @@ if __name__ == '__main__':
                         action='store',
                         default=None)
     parser.add_argument('-tmp', '--tmppath',
-                        help='Directory, where tmp directory gets created.',
+                        help='Directory, where tmp files get stored.',
                         type=str,
                         metavar='PATH',
                         action='store',
@@ -769,20 +769,19 @@ if __name__ == '__main__':
         raise Exception('The --pool option can only be performed if --parallel option is enabled.')
     
     # set temporary directory
-    pre_tmp_path = args.tmppath
-    tmp_dir = pre_tmp_path + '/tmp/'
+    tmp_dir = args.tmppath
     # set result directory
     outpath = args.outpath #'./'
     
     # test if outpath directory exists
     if not os.path.isdir(outpath):
-        print(f'Directory {outpath} does not exist.')
-        exit()
+        os.mkdir(outpath)
+        print(f'Created directory {outpath}.')
     
     # test if path for tmp file exists
-    if not os.path.isdir(pre_tmp_path):
-        print(f'Directory {pre_tmp_path} does not exist.')
-        exit()
+    if not os.path.isdir(tmp_dir):
+        os.mkdir(tmp_dir)
+        print(f'Created directory {tmp_dir}.')
     
     # get path, where this file is saved
     dir_path = os.path.dirname(os.path.realpath(__file__))
