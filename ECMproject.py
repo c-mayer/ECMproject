@@ -700,7 +700,7 @@ if __name__ == '__main__':
                         type=str,
                         metavar='PATH',
                         action='store',
-                        default='./')
+                        default='./tmp/')
     parser.add_argument('-dv', '--developer',
                         help='Intermediate files in tmp directory get not deleted. H- and V-representation are maintained.',
                         action='store_true')
@@ -769,7 +769,7 @@ if __name__ == '__main__':
         raise Exception('The --pool option can only be performed if --parallel option is enabled.')
     
     # set temporary directory
-    tmp_dir = args.tmppath
+    tmp_dir = args.tmppath + '/'
     # set result directory
     outpath = args.outpath #'./'
     

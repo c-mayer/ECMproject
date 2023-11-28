@@ -1,6 +1,6 @@
 # ECMproject - Elementary conversion mode enumeration via mplrs project
 
-ECMproject is an open source program which fastenes up the enumeration of Elementary Conversion Modes (ECMs) on more complex metabolic models compared to ecmtool. It can be used as a stand-alone program to enumerate all ECMs and therefore get a broad overview about all metabolic possibilities an organism can perform. Via altering the input model, different environments can be simulated.
+ECMproject is an open source program which fastenes up the enumeration of Elementary Conversion Modes (ECMs) on more complex metabolic models compared to [ecmtool](https://github.com/SystemsBioinformatics/ecmtool). It can be used as a stand-alone program to enumerate all ECMs and therefore get a broad overview about all metabolic possibilities an organism can perform. Via altering the input model, different environments can be simulated.
 
 ## Background
 
@@ -8,7 +8,7 @@ The idea of enumerating ECMs dervies from the enumeration of EFMs (Elementary Fl
 
 ## Introduction
 
-ECMproject is a standalone command line program for Linux systems written in Python. It got developed in the course of two Master Theses to get a faster alternative to ecmtool on more complex models. Performance of ECMproject strongly depends on the structure of the metabolic model. All metabolic models which were used to develop ECMproject are avaiable in this GitHub repository. Up to the model 'mmsyn_sm09' with 278 reactions and 269 metabolites, ecmtool is faster than ECMproject. For more complex models, ECMproject is the faster tool, despite both tools reach very high computational times on complex models quite fast.
+ECMproject is a standalone command line program for Linux systems written in Python. It got developed in the course of two Master Theses to get a faster alternative to [ecmtool](https://github.com/SystemsBioinformatics/ecmtool) on more complex models. Performance of ECMproject strongly depends on the structure of the metabolic model. All metabolic models which were used to develop ECMproject are avaiable in this GitHub repository. Up to the model 'mmsyn_sm09' with 278 reactions and 269 metabolites, [ecmtool](https://github.com/SystemsBioinformatics/ecmtool) is faster than ECMproject. For more complex models, ECMproject is the faster tool, despite both tools reach very high computational times on complex models quite fast.
 
 ## Requirements
 
@@ -88,7 +88,7 @@ Navigate to the directory and run ECMproject via `./ECMproject.py -h`
 
 ## Description
 
-Metabolic models as input are given via the SBML-format. Cobrapy is used to parse the input file into python objects, which get processed and written into an equation system like format, the H-representation (like it is done in EFMlrs). This H-representation gets projected onto external reactions via 'mplrs project' and afterwards converted to a V-representation via mplrs. By combining the stochiometric matrix with this V-representation, we get our Conversion Cone with all ECMs.
+Metabolic models as input are given via the SBML-format. Cobrapy is used to parse the input file into python objects, which get processed and written into an equation system like format, the H-representation (like it is done in [EFMlrs](https://github.com/BeeAnka/EFMlrs)). This H-representation gets projected onto external reactions via 'mplrs project' and afterwards converted to a V-representation via mplrs. By combining the stochiometric matrix with this V-representation, we get our Conversion Cone with all ECMs.
 
 ## Usage
 
@@ -157,7 +157,7 @@ Note: Parsing of input SBML-file should be no problem if input file is written w
 
 ## Acknowledgements
 
-The source code was written by Christian Mayer and Marcus Holzer with the help of Bianca Allegra Buchner. Some code snippets of EFMlrs where used as inspiration. The tool was developed in the working group of Univ.-Prof. Dipl.-Ing. Dr. Jürgen Zanghellini.
+The source code was written by Christian Mayer and Marcus Holzer with the help of Bianca Allegra Buchner. Some code snippets of [EFMlrs](https://github.com/BeeAnka/EFMlrs) where used as inspiration. The tool was developed in the working group of Univ.-Prof. Dipl.-Ing. Dr. Jürgen Zanghellini.
 
 ## License
 
