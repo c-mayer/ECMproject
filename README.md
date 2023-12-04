@@ -78,6 +78,10 @@ cd lrslib-072
 make && make mplrs && make install
 ```
 
+### Tool for measuring used memory
+
+For reproduction of all result time files, the script 'benchmark_test.py' is used. This script uses the 'time' function of the GNU library, which may has to be installed additionally to your system (https://www.gnu.org/software/time/).
+
 ## Installation
 
 * Install mplrs.
