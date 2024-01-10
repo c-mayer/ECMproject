@@ -80,7 +80,7 @@ make && make mplrs && make install
 
 ### Tool for measuring used memory
 
-For reproduction of all result time files, the script 'benchmark_test.py' is used. This script uses the 'time' function of the GNU library, which may has to be installed additionally to your system (https://www.gnu.org/software/time/).
+For reproduction of all result time files, the script 'benchmark_test.py' is used. This script uses the 'time' function of the GNU library, which may has to be installed additionally to your system (https://www.gnu.org/software/time/). The time functions needs to be able to perform the verbose '-v' option. Lookout to have/install a version which implements this option (for example time-1.9 version).
 
 ## Installation
 

@@ -6,8 +6,6 @@
 /first_tasks
 # ignore old_versions
 /old_versions
-# ignore performance/gtime
-/performance/gtime
 # ignore .ipynb_checkpoints
 **/.ipynb_checkpoints
 # ignore installation.txt

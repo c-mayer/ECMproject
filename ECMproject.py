@@ -485,7 +485,8 @@ def merge_V_representation(reaction_pair_index, array, n_reactions):
         index_1, index_2 = index_pair
         merged_reaction = array[:,index_1] - array[:,index_2]
         array[:,index_1] = merged_reaction
-    # since all backward reations at the end:
+    # since all backward reactions at the end:
+    # its important to just remove them at the end because it would mess up the index_2 indices if deleted beforehand
     array = array[:,:(n_reactions)]
     # removing all rows just containing 0
     array = array[~np.all(array == 0, axis=1)]

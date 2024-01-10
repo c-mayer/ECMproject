@@ -10,6 +10,13 @@ Requirements to work when working with all three tool options: Needs environment
                       3) cobra (conda install -c conda-forge cobra)
                          and ECMproject
 
+Usage example:
+
+    Performs ECMproject with 20 cores on E.Coli core model. 2 Repeats. Saves time result files in the ./new/ directory.
+
+    ./benchmark_test.py -f ../metabolic_models/e_coli_core.xml -m e_coli_core -t ECMproject -n 20 -r 2 -op ./new/
+    
+
 @author: Christian Mayer
 """
 
@@ -184,7 +191,7 @@ if __name__ == '__main__':
                         type=str,
                         metavar='FILE',
                         action='store',
-                        default='/opt/lrslib/v072/mplrs')
+                        default='mplrs')
     parser.add_argument('-ep', '--ECMproject',
                         help='Path to ECMproject.py.',
                         type=str,
@@ -202,7 +209,7 @@ if __name__ == '__main__':
                         type=str,
                         metavar='FILE',
                         action='store',
-                        default='./gtime/bin/time')
+                        default='time')
     parser.add_argument('-v', '--verbose',
                         help='Result dictionary will be printed also as console output.',
                         action='store_true')
@@ -258,6 +265,11 @@ if __name__ == '__main__':
     # create temporary directory
     if not os.path.exists(tmp_path):
         os.mkdir(tmp_path)
+    # create outpath directory
+    if not os.path.exists(outpath):
+        os.mkdir(outpath)
+        print(f'Directory "{outpath}" got created.')
+
     
     if ECMproject_switch:
         ##### ECMproject #####

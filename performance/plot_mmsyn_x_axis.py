@@ -41,7 +41,7 @@ if __name__ == '__main__':
     day = True # 1 day mark in y axis
     y_borders = False # if not False, give the border values of the y axis (for log scale use power of.... e.g. (10**-1, 10**5))
     memory = False
-    stdev = False
+    stdev = True
     ecmtool = True
     pool = False
     single = False
@@ -52,8 +52,8 @@ if __name__ == '__main__':
         lookup_time_ecmtool_1 = 'time_total'
         lookup_time_ecmtool_2 = False
             
-    ECMproject_label = 'ECMproject total'
-    ecmtool_label = 'ecmtool total'
+    ECMproject_label = 'ECMproject'
+    ecmtool_label = 'ecmtool'
     
     # range of x-axis for model complexity
     x = list(range(0,max_complexity+1))
