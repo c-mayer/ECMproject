@@ -40,7 +40,7 @@ def get_json_times(time_file, sbmlfile, ECMproject, ecmtool, gnutime, path2mplrs
             print(f'Repeat {i + 1}')
             # run script
             if script == 'ECMproject':
-                cmd = [gnutime, '-v', ECMproject, '-f', sbmlfile, '-m', core_name, '-n', str(cores), '-o', tmp_path, '-mp', path2mplrs, '--time', '--chunksize', str(chunksize)] # default cores are 3 and chunksize 100 000
+                cmd = [gnutime, '-v', ECMproject, '-f', sbmlfile, '-m', core_name, '-n', str(cores), '-o', tmp_path, '-mp', path2mplrs, '--time', '--chunksize', str(chunksize), '-p'] # default cores are 3 and chunksize 100 000
             elif script == 'ecmtool':
                 cmd = [gnutime, '-v', 'python', ecmtool, '--model_path', sbmlfile, '--out_path', tmp_path + core_name + "_ecmtool.csv", '--path2mplrs', path2mplrs, '--processes', str(cores)] # default cores are 3
             elif script == 'mfel':
@@ -262,6 +262,7 @@ if __name__ == '__main__':
     # set up architecture for further performance measurement
     dir_path = os.path.dirname(os.path.realpath(__file__))
     tmp_path = dir_path + '/results/'
+    outpath = outpath + '/'
     # create temporary directory
     if not os.path.exists(tmp_path):
         os.mkdir(tmp_path)
@@ -279,13 +280,13 @@ if __name__ == '__main__':
         time_file = './results/' + core_name + '_times.json'
         result_ECMproject = get_json_times(time_file, sbmlfile, ECMproject, ecmtool, gnutime, path2mplrs, tmp_path, core_name, script, n_cores, n_repeats, chunksize)
         result_ECMproject = get_mean_stdev(result_ECMproject, stdev=stdev)
-        json.dump(result_ECMproject, open(outpath + core_name + '_mplrs_project_result_times.json','w'))
+        json.dump(result_ECMproject, open(outpath + '/' + core_name + '_mplrs_project_result_times.json','w'))
         print(f'{outpath + core_name + "_mplrs_project_result_times.json"} created.')
         # csv files
-        csv_file = outpath + '/' + 'all_total_times_own.csv'
+        csv_file = outpath + 'all_total_times_own.csv'
         total_time_means_to_csv(result_ECMproject, n_cores, csv_file, core_name)
         print(f'{csv_file} created')
-        csv_file = outpath + '/' + core_name + '_own.csv'
+        csv_file = outpath + core_name + '_own.csv'
         all_means_to_csv(result_ECMproject, n_cores, csv_file)
         print(f'{csv_file} created')
         
@@ -312,10 +313,10 @@ if __name__ == '__main__':
         json.dump(result_ecmtool, open(outpath + core_name + '_ecmtool_result_times.json','w'))
         print(f'{outpath + core_name + "_ecmtool_result_times.json"} created.')
         # csv files
-        csv_file = outpath + '/' + 'all_total_times_ecmtool.csv'
+        csv_file = outpath + 'all_total_times_ecmtool.csv'
         total_time_means_to_csv(result_ecmtool, n_cores, csv_file, core_name)
         print(f'{csv_file} created')
-        csv_file = outpath + '/' + core_name + '_ecmtool.csv'
+        csv_file = outpath + core_name + '_ecmtool.csv'
         all_means_to_csv(result_ecmtool, n_cores, csv_file)
         print(f'{csv_file} created')
         
@@ -343,10 +344,10 @@ if __name__ == '__main__':
         json.dump(result_mfel, open(outpath + core_name + '_mfel_result_times.json','w'))
         print(f'{outpath + core_name + "_mfel_result_times.json"} created.')
         # csv files
-        csv_file = outpath + '/' + 'all_total_times_mfel.csv'
+        csv_file = outpath + 'all_total_times_mfel.csv'
         total_time_means_to_csv(result_mfel, n_cores, csv_file, core_name)
         print(f'{csv_file} created')
-        csv_file = outpath + '/' + core_name + '_mfel.csv'
+        csv_file = outpath + core_name + '_mfel.csv'
         all_means_to_csv(result_mfel, n_cores, csv_file)
         print(f'{csv_file} created')
         
